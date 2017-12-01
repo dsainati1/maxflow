@@ -1,0 +1,8 @@
+source
+A:1, B:2
+sink
+---
+A
+sink:1
+B
+sink:1

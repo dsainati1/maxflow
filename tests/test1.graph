@@ -1,0 +1,8 @@
+source
+B:2000, C:2000,
+sink
+---
+B
+sink:1000
+C
+sink:1000

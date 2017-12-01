@@ -1,0 +1,12 @@
+source
+v1:2, v2:2, v4:2
+sink
+---
+v1
+sink:2
+v2
+v1:1, v3:1
+v3
+sink:2
+v4
+sink:2, v3:1

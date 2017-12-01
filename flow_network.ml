@@ -168,7 +168,7 @@ module FlowNetworkMaker (G : Graph)
 		G.print_node n2;
 		print_string ")"
 
-	let print_path p : unit = List.iter (print_edge) p
+	let print_path p : unit = List.iter (print_edge) p; print_endline ""
 
  	let max_flow (g : graph) : flow = 
  		let rec helper (f : flow) (gf : graph) : flow = 
@@ -181,5 +181,5 @@ module FlowNetworkMaker (G : Graph)
 
  	let flow_capacity (g : graph) (f : flow) : int = 
  		G.source g |> G.outgoing g |> 
- 		List.fold_left (fun acc x -> acc + Hashtbl.find f x) 0 
+ 		List.fold_left (fun acc x -> try acc + Hashtbl.find f x with Not_found -> acc) 0 
 end

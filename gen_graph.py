@@ -26,8 +26,31 @@ def output_results(size, graph, output_file):
           outfile.write(str(n[1]))
           outfile.write(",")
 
+def make_degree_graph(size, degree, cap):
+  lst = range(0, size)
+  graph = {}
 
-def make_graph(size, prob):
+  for node in lst:
+    ns = []
+    for i in range(0, degree):
+      neighbor = random.randint(0, size)
+      if neighbor == size:
+        name = "sink"
+      else:
+        name = str(neighbor) 
+      ns.append((name, random.randint(1,cap)))
+    graph[str(node)] = ns
+
+  src = []
+  for i in range(0, degree):
+      neighbor = random.randint(0, size-1)
+      src.append((str(neighbor), random.randint(1,cap)))
+  graph["source"] = src
+  graph["sink"] = []
+  return graph
+
+
+def make_uniform_graph(size, prob, cap):
   lst = range(0, size)
   graph = {}
 
@@ -37,15 +60,15 @@ def make_graph(size, prob):
       if node == neighbor:
         continue
       if random.random() <= prob:
-        ns.append((str(neighbor), random.randint(1,10)))
+        ns.append((str(neighbor), random.randint(1,cap)))
     if random.random() <= prob:
-        ns.append(("sink", random.randint(1,10)))
+        ns.append(("sink", random.randint(1,cap)))
     graph[str(node)] = ns
 
   src = []
   for node in lst:
     if random.random() <= prob:
-      src.append((str(node), random.randint(1,10)))
+      src.append((str(node), random.randint(1,cap)))
   graph["source"] = src
   graph["sink"] = []
   return graph
@@ -53,9 +76,15 @@ def make_graph(size, prob):
 def main():
   outfile = sys.argv[1]
   size = int(sys.argv[2])
-  prob = float(sys.argv[3])
+  typ = sys.argv[4]
+  cap = int(sys.argv[5])
 
-  graph = make_graph(size, prob)
+  if typ == "uniform":
+    prob = float(sys.argv[3])
+    graph = make_uniform_graph(size, prob, cap)
+  else:
+    prob = int(sys.argv[3])
+    graph = make_degree_graph(size, prob, cap)
   output_results(size, graph, outfile)  
 
 if __name__ == "__main__":
